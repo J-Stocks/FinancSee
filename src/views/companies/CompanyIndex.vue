@@ -9,7 +9,7 @@
       <p v-if="companies === undefined || companies.length === 0">{{ message }}</p>
       <ul v-else>
         <li v-for="company in companies" :key="company.id">
-          <router-link :to="{name: 'CompanyDetails', params: {id: company.id}}">{{ company.name }}</router-link>
+          <router-link :to="{name: 'CompanyDetails', params: {symbol: company.symbol}}">{{ company.name }}</router-link>
         </li>
       </ul>
     </template>

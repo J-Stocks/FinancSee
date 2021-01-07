@@ -5,11 +5,15 @@
       <router-link :to="{name: 'CompanyIndex'}">Companies</router-link>
     </template>
     <template v-slot:main>
-      <p>Company Name: {{ company.name }}</p>
-      <p>Symbol: {{ company.symbol }}</p>
-      <p>Exchange: {{ company.exchange }}</p>
-      <p>Asset Type: {{ company.assetType }}</p>
-      <p>IPO date: {{ company.ipoDate }}</p>
+      <div v-if="company">
+        <p>Company Name: {{ company.Name }}</p>
+        <p>Symbol: {{ company.Symbol }}</p>
+        <p>Exchange: {{ company.Exchange }}</p>
+        <p>Asset Type: {{ company.AssetType }}</p>
+        <p>Industry: {{ company.Industry }}</p>
+        <p>{{ company.Description }}</p>
+      </div>
+      <p v-else>Waiting for Data</p>
     </template>
   </default-layout>
 </template>
@@ -25,13 +29,23 @@
     },
     data: function () {
       return {
-        companyId: this.$route.params.id,
+        company: null,
+        companySymbol: this.$route.params.symbol,
       }
     },
     computed: {
-      company() {
-        return AlphaVantage.getCompanyById(this.companyId);
+      companyPromise() {
+        return AlphaVantage.getCompanyBySymbol(this.companySymbol);
       }
+    },
+    created() {
+      this.companyPromise = AlphaVantage.getCompanyBySymbol(this.companySymbol);
+    },
+    mounted() {
+      this.companyPromise
+          .then(response => response.json())
+          .then(json => this.company = Object.assign({}, json))
+          .catch((error) => console.log('Error:', error));
     }
   }
 </script>
