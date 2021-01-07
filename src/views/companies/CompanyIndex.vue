@@ -1,8 +1,7 @@
 <template>
   <default-layout>
     <template v-slot:nav>
-      <router-link :to="{name: 'Home'}">Home</router-link> |
-      <router-link :to="{name: 'CompanyIndex'}">Companies</router-link>
+      <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
     </template>
     <template v-slot:main>
       <h1>Company Index</h1>
@@ -19,11 +18,13 @@
 <script>
   import AlphaVantage from '@/alpha-vantage';
   import DefaultLayout from "@/layouts/DefaultLayout";
+  import NavLink from "@/components/NavLink";
 
   export default {
     name: "CompanyIndex",
     components: {
-      DefaultLayout
+      DefaultLayout,
+      NavLink
     },
     data: function () {
       return {
