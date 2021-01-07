@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import {AlphaVantage} from '@/alpha-vantage';
+  import AlphaVantage from '@/alpha-vantage';
   import DefaultLayout from "@/layouts/DefaultLayout";
 
   export default {

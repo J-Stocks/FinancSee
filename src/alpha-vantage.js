@@ -1,6 +1,6 @@
 import data from '@/assets/data/listing_status.json';
 
-export class AlphaVantage {
+export default class AlphaVantage {
     static apiKey = process.env.VUE_APP_ALPHA_VANTAGE_KEY;
 
     static baseUrl = "https://www.alphavantage.co/query?";
