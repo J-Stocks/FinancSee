@@ -1,11 +1,18 @@
 <template>
   <default-layout>
     <template v-slot:nav>
-      <router-link :to="{name: 'Home'}">Home</router-link> |
-      <router-link :to="{name: 'CompanyIndex'}">Companies</router-link>
+      <router-link :to="{name: 'Home'}" class="w-full text-center">FinancSee</router-link>
     </template>
     <template v-slot:main>
-      <h1>Welcome to FinancSee</h1>
+      <div class="flex justify-center">
+        <div class="flex flex-col space-y-2">
+          <router-link
+              :to="{name: 'CompanyIndex'}"
+              class="border border-gray-800 rounded hover:bg-gray-300 text-center p-1">
+            Companies
+          </router-link>
+        </div>
+      </div>
     </template>
   </default-layout>
 </template>
