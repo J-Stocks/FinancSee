@@ -1,10 +1,13 @@
 <template>
-  <div>
+  <section>
     <h1>Company Index</h1>
-    <ul>
-      <li v-for="company in companies" :key="company.id">{{ company.name }}</li>
+    <p v-if="companies === undefined || companies.length === 0">{{ message }}</p>
+    <ul v-else>
+      <li v-for="company in companies" :key="company.id">
+        <router-link :to="{name: 'CompanyDetails', params: {id: company.id}}">{{ company.name }}</router-link>
+      </li>
     </ul>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -15,12 +18,8 @@
     data: function () {
       return {
         message: 'No Companies Found',
-        companies: []
+        companies: AlphaVantage.getAllCompanies()
       }
-    },
-    mounted() {
-      this.companies = Object.assign({}, AlphaVantage.getAllCompanies());
-      console.log(this.companies);
     }
   }
 </script>

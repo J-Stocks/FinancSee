@@ -4,7 +4,9 @@
       <router-link :to="{name: 'Home'}">Home</router-link> |
       <router-link :to="{name: 'CompanyIndex'}">Companies</router-link>
     </div>
-    <router-view/>
+    <main>
+      <router-view/>
+    </main>
   </div>
 </template>
 
