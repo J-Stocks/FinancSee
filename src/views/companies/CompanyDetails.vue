@@ -6,14 +6,22 @@
     </template>
     <template v-slot:main>
       <div v-if="company">
-        <p>Company Name: {{ company.Name }}</p>
-        <p>Symbol: {{ company.Symbol }}</p>
-        <p>Exchange: {{ company.Exchange }}</p>
-        <p>Asset Type: {{ company.AssetType }}</p>
-        <p>Industry: {{ company.Industry }}</p>
-        <p>{{ company.Description }}</p>
+        <div class="mb-2 flex sm:flex-col-reverse md:flex-row md:justify-between">
+          <p class="text-xl font-medium">{{ company.Name }}</p>
+          <p class="text-xl font-medium whitespace-nowrap">Symbol: {{ company.Symbol }}</p>
+        </div>
+        <p class="mb-2">{{ company.Description }}</p>
+        <div class="flex-col flex-col space-y-2">
+          <p>Asset Type: {{ company.AssetType }}</p>
+          <p>Exchange: {{ company.Exchange }}</p>
+          <p>Currency: {{ company.Currency}}</p>
+          <p>Country: {{ company.Country}}</p>
+          <p>Sector: {{ company.Sector }}</p>
+          <p>Industry: {{ company.Industry }}</p>
+          <p>Address: {{ company.Address }}</p>
+        </div>
       </div>
-      <p v-else>Waiting for Data</p>
+      <p v-else class="h-full text-center text-3xl">Loading</p>
     </template>
   </default-layout>
 </template>
