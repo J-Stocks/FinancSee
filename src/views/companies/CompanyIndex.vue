@@ -4,13 +4,12 @@
       <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
     </template>
     <template v-slot:main>
-      <h1>Company Index</h1>
-      <p v-if="companies === undefined || companies.length === 0">{{ message }}</p>
-      <ul v-else>
+      <ul v-if="companies && companies.length !== 0">
         <li v-for="company in companies" :key="company.id">
           <router-link :to="{name: 'CompanyDetails', params: {symbol: company.symbol}}">{{ company.name }}</router-link>
         </li>
       </ul>
+      <p v-else class="h-full text-center text-3xl">No Companies Found</p>
     </template>
   </default-layout>
 </template>
@@ -28,7 +27,6 @@
     },
     data: function () {
       return {
-        message: 'No Companies Found',
         companies: AlphaVantage.getAllCompanies()
       }
     }
