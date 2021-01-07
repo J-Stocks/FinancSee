@@ -38,9 +38,6 @@
         return AlphaVantage.getCompanyBySymbol(this.companySymbol);
       }
     },
-    created() {
-      this.companyPromise = AlphaVantage.getCompanyBySymbol(this.companySymbol);
-    },
     mounted() {
       this.companyPromise
           .then(response => response.json())
