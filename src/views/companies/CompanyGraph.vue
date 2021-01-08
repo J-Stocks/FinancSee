@@ -10,25 +10,11 @@
         <p class="text-xl font-medium">{{ companyName }}</p>
         <p class="text-xl font-medium whitespace-nowrap">Symbol: {{ companySymbol }}</p>
       </div>
-      <div>
-        <label for="startDate">Start Date:</label>
-        <input
-            v-model="startDate"
-            v-on:change="updateGraph"
-            type="date"
-            name="startDate"
-            id="startDate"
-        >
-      </div>
-      <div>
-        <label for="endDate">End Date:</label>
-        <input
-            v-model="endDate"
-            v-on:change="updateGraph"
-            type="date"
-            name="endDate"
-            id="endDate"
-        >
+      <div class="inline-grid gird-cols-2-auto gap-2">
+        <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
+        <date-picker id="startDate" name="startDate" :initialDate="startDate" @changeDate="updateStartDate($event)"/>
+        <label for="endDate" class="flex flex-col justify-center">End Date:</label>
+        <date-picker id="endDate" name="endDate" :initialDate="endDate" @changeDate="updateEndDate($event)"/>
       </div>
       <div v-if="timeSeries">
         <p>Graph Goes Here</p>
@@ -40,6 +26,7 @@
 
 <script>
   import AlphaVantage from "@/alpha-vantage";
+  import DatePicker from "@/components/DatePicker"
   import DefaultLayout from "@/layouts/DefaultLayout";
   import NavLink from "@/components/NavLink";
   import dayjs from "dayjs";
@@ -47,6 +34,7 @@
   export default {
     name: "CompanyGraph",
     components: {
+      DatePicker,
       DefaultLayout,
       NavLink
     },
@@ -74,9 +62,23 @@
           .catch(error => console.log('Error', error));
     },
     methods: {
-      updateGraph: function () {
+      updateGraph() {
         console.log(`startDate: ${this.startDate}, endDate: ${this.endDate}`)
+      },
+      updateEndDate(newDate) {
+        this.endDate = newDate;
+        this.updateGraph();
+      },
+      updateStartDate(newDate) {
+        this.startDate = newDate;
+        this.updateGraph()
       }
     }
   }
 </script>
+
+<style scoped>
+  .gird-cols-2-auto{
+    grid-template-columns: auto auto;
+  }
+</style>
