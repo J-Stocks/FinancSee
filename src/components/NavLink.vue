@@ -1,7 +1,7 @@
 <template>
   <router-link
       :to=routeTo
-      class="pb-0.5 border-b border-0 border-gray-200 hover:border-gray-800 ease-in-out duration-150"
+      class="pb-0.5 border-b border-gray-200 hover:border-gray-800 ease-in-out duration-150"
   >
     {{ linkText }}
   </router-link>
