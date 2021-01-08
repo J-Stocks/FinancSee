@@ -2,11 +2,12 @@
   <default-layout>
     <template v-slot:nav>
       <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
-      <nav-link :route-to="{name: 'CompanyDetails', symbol: companySymbol}" link-text="Company"/>
+      <nav-link :route-to="{name: 'CompanyDetails', symbol: companySymbol}" link-text="Profile"/>
+      <nav-link :route-to="{name: 'CompanyGraph', symbol: companySymbol}" link-text="Prices"/>
     </template>
     <template v-slot:main>
       <div v-if="company">
-        <div class="mb-2 flex sm:flex-col-reverse md:flex-row md:justify-between">
+        <div class="mb-2 flex flex-col-reverse md:flex-row md:justify-between">
           <p class="text-xl font-medium">{{ company.Name }}</p>
           <p class="text-xl font-medium whitespace-nowrap">Symbol: {{ company.Symbol }}</p>
         </div>

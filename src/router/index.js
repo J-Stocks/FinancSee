@@ -19,6 +19,11 @@ const routes = [
     path: '/company/:symbol',
     name: 'CompanyDetails',
     component: () => import(/* webpackChunkName: "company-details" */ '../views/companies/CompanyDetails.vue')
+  },
+  {
+    path: '/company/:symbol/graph',
+    name: 'CompanyGraph',
+    component: () => import(/* webpackChunkName: "company-graph" */ '../views/companies/CompanyGraph.vue')
   }
 ]
 
