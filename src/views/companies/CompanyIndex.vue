@@ -27,8 +27,11 @@
     },
     data: function () {
       return {
-        companies: AlphaVantage.getAllCompanies()
+        companies: []
       }
+    },
+    beforeCreate() {
+      AlphaVantage.getAllCompanies().then(results => this.companies = results);
     }
   }
 </script>

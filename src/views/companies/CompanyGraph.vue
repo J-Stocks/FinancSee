@@ -54,17 +54,17 @@
           responsive: true
         },
         companySymbol: this.$route.params.symbol,
+        companyName: '',
         endDate: dayjs().format('YYYY-MM-DD'),
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
         timeSeries: []
       }
     },
-    computed: {
-      companyName() {
-        return AlphaVantage.getCompanyName(this.companySymbol);
-      }
-    },
     mounted() {
+      AlphaVantage
+          .getCompanyName(this.companySymbol)
+          .then(name => this.companyName = name)
+      ;
       AlphaVantage
           .getTimeSeries(this.companySymbol)
           .then(response => response.json())
