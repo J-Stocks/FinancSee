@@ -16,7 +16,12 @@
         <label for="endDate" class="flex flex-col justify-center">End Date:</label>
         <date-picker id="endDate" name="endDate" :initialDate="endDate" @changeDate="updateEndDate($event)"/>
       </div>
-      <line-chart v-if="timeSeries" :chart-data="chartData" :chart-options="chartOptions"/>
+      <line-chart
+          v-if="showChart"
+          :chart-data="chartData"
+          :chart-options="chartOptions"
+          :update-trigger="updateTrigger"
+      />
       <p v-else class="h-full text-center text-3xl">Loading</p>
     </template>
   </default-layout>
@@ -56,8 +61,10 @@
         companySymbol: this.$route.params.symbol,
         companyName: '',
         endDate: dayjs().format('YYYY-MM-DD'),
+        showChart: false,
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
-        timeSeries: []
+        timeSeries: [],
+        updateTrigger: true
       }
     },
     created() {
@@ -70,6 +77,7 @@
           .then(data => {
             this.timeSeries = data;
             this.updateGraph();
+            this.showChart = true;
           })
       ;
     },
@@ -101,6 +109,7 @@
           }
           tempDate = tempDate.add(1, 'day');
         }
+        this.updateTrigger = !this.updateTrigger;
       },
       updateEndDate(newDate) {
         this.endDate = newDate;

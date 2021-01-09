@@ -8,7 +8,14 @@
       mixins.reactiveProp
     ],
     props: {
-      chartOptions: Object
+      chartOptions: Object,
+      updateTrigger: Boolean
+    },
+    watch: {
+      updateTrigger() {
+        console.log(this.chartOptions);
+        this.renderChart(this.chartData, this.chartOptions);
+      }
     },
     mounted() {
       this.renderChart(this.chartData, this.chartOptions);
