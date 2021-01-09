@@ -24,6 +24,9 @@ export default class AlphaVantage {
 
     static getCompanyBySymbol(symbol) {
         return fetch(`${this.baseUrl}function=OVERVIEW&symbol=${symbol}&apikey=${this.apiKey}`)
+            .then(response => response.json())
+            .catch(error => console.log('Error', error))
+        ;
     }
 
     static getCompanyName(symbol) {
@@ -37,6 +40,15 @@ export default class AlphaVantage {
             `&symbol=${symbol}` +
             `&outputsize=full` +
             `&apikey=${this.apiKey}`
-        );
+            ).then(response => response.json())
+            .then(json => {
+                let timeSeries = []
+                for (const key of Object.keys(json["Time Series (Daily)"])) {
+                    timeSeries[key] = Number.parseFloat(json["Time Series (Daily)"][key]["5. adjusted close"]);
+                }
+                return timeSeries;
+            })
+            .catch(error => console.log('Error', error))
+        ;
     }
 }

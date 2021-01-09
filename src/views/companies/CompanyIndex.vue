@@ -30,7 +30,7 @@
         companies: []
       }
     },
-    beforeCreate() {
+    created() {
       AlphaVantage.getAllCompanies().then(results => this.companies = results);
     }
   }

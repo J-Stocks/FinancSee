@@ -60,22 +60,18 @@
         timeSeries: []
       }
     },
-    mounted() {
+    created() {
       AlphaVantage
           .getCompanyName(this.companySymbol)
           .then(name => this.companyName = name)
       ;
       AlphaVantage
           .getTimeSeries(this.companySymbol)
-          .then(response => response.json())
-          .then(json => {
-            const keys = Object.keys(json["Time Series (Daily)"]);
-            for (const key of keys){
-              this.timeSeries[key] = Number.parseFloat(json["Time Series (Daily)"][key]["5. adjusted close"]);
-            }
+          .then(data => {
+            this.timeSeries = data;
             this.updateGraph();
           })
-          .catch(error => console.log('Error', error));
+      ;
     },
     watch:{
       endDate(){

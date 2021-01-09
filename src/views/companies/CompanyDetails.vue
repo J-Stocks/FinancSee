@@ -44,16 +44,11 @@
         companySymbol: this.$route.params.symbol,
       }
     },
-    computed: {
-      companyPromise() {
-        return AlphaVantage.getCompanyBySymbol(this.companySymbol);
-      }
-    },
-    mounted() {
-      this.companyPromise
-          .then(response => response.json())
-          .then(json => this.company = Object.assign({}, json))
-          .catch((error) => console.log('Error:', error));
+    created() {
+      AlphaVantage
+          .getCompanyBySymbol(this.companySymbol)
+          .then(company => this.company = Object.assign({}, company))
+      ;
     }
   }
 </script>
