@@ -12,9 +12,21 @@
       </div>
       <div class="inline-grid gird-cols-2-auto gap-2">
         <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
-        <date-picker id="startDate" name="startDate" :initialDate="startDate" @changeDate="updateStartDate($event)"/>
+        <date-picker
+            id="startDate"
+            name="startDate"
+            :initialDate="startDate"
+            :max="maxStartDate"
+            @changeDate="updateStartDate($event)"
+        />
         <label for="endDate" class="flex flex-col justify-center">End Date:</label>
-        <date-picker id="endDate" name="endDate" :initialDate="endDate" @changeDate="updateEndDate($event)"/>
+        <date-picker
+            id="endDate"
+            name="endDate"
+            :initialDate="endDate"
+            :min="minEndDate"
+            @changeDate="updateEndDate($event)"
+        />
       </div>
       <line-chart
           v-if="showChart"
@@ -67,6 +79,14 @@
         updateTrigger: true
       }
     },
+    computed: {
+      maxStartDate() {
+        return dayjs(this.endDate).subtract(1, 'day').format('YYYY-MM-DD');
+      },
+      minEndDate() {
+        return dayjs(this.startDate).add(1, 'day').format('YYYY-MM-DD');
+      }
+    },
     created() {
       AlphaVantage
           .getCompanyName(this.companySymbol)
@@ -91,7 +111,6 @@
     },
     methods: {
       updateGraph() {
-        console.log(`startDate: ${this.startDate}, endDate: ${this.endDate}`);
         let tempDate = dayjs(this.startDate);
         let lastData = 0;
         if (dayjs(this.startDate).isBefore(dayjs().subtract(20, 'years'))) {

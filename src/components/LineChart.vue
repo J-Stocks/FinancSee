@@ -13,7 +13,6 @@
     },
     watch: {
       updateTrigger() {
-        console.log(this.chartOptions);
         this.renderChart(this.chartData, this.chartOptions);
       }
     },
