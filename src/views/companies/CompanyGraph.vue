@@ -16,9 +16,7 @@
         <label for="endDate" class="flex flex-col justify-center">End Date:</label>
         <date-picker id="endDate" name="endDate" :initialDate="endDate" @changeDate="updateEndDate($event)"/>
       </div>
-      <div v-if="timeSeries">
-        <p>Graph Goes Here</p>
-      </div>
+      <line-chart v-if="timeSeries" :chart-data="chartData" :options="chartOptions"/>
       <p v-else class="h-full text-center text-3xl">Loading</p>
     </template>
   </default-layout>
@@ -28,6 +26,7 @@
   import AlphaVantage from "@/alpha-vantage";
   import DatePicker from "@/components/DatePicker"
   import DefaultLayout from "@/layouts/DefaultLayout";
+  import LineChart from "@/components/LineChart";
   import NavLink from "@/components/NavLink";
   import dayjs from "dayjs";
 
@@ -36,14 +35,28 @@
     components: {
       DatePicker,
       DefaultLayout,
+      LineChart,
       NavLink
     },
     data: function () {
       return {
+        chartData: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Adjusted Close',
+              data: []
+            }
+          ]
+        },
+        chartOptions: {
+          maintainAspectRatio: false,
+          responsive: true
+        },
         companySymbol: this.$route.params.symbol,
         endDate: dayjs().format('YYYY-MM-DD'),
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
-        timeSeries: null
+        timeSeries: []
       }
     },
     computed: {
@@ -56,22 +69,48 @@
           .getTimeSeries(this.companySymbol)
           .then(response => response.json())
           .then(json => {
-            this.timeSeries = json;
+            const keys = Object.keys(json["Time Series (Daily)"]);
+            for (const key of keys){
+              this.timeSeries[key] = Number.parseFloat(json["Time Series (Daily)"][key]["5. adjusted close"]);
+            }
             this.updateGraph();
           })
           .catch(error => console.log('Error', error));
     },
+    watch:{
+      endDate(){
+        this.updateGraph();
+      },
+      startDate(){
+        this.updateGraph();
+      }
+    },
     methods: {
       updateGraph() {
-        console.log(`startDate: ${this.startDate}, endDate: ${this.endDate}`)
+        console.log(`startDate: ${this.startDate}, endDate: ${this.endDate}`);
+        let tempDate = dayjs(this.startDate);
+        let lastData = 0;
+        if (dayjs(this.startDate).isBefore(dayjs().subtract(20, 'years'))) {
+          tempDate = dayjs().subtract(20, 'years')
+        }
+        this.chartData.labels.splice(0, this.chartData.labels.length);
+        this.chartData.datasets[0].data.splice(0, this.chartData.datasets[0].data.length);
+        while (tempDate.isBefore(dayjs(this.endDate)) && tempDate.isBefore(dayjs())) {
+          this.chartData.labels.push(tempDate.format('YYYY-MM-DD'));
+          if (this.timeSeries[tempDate.format('YYYY-MM-DD')]) {
+            this.chartData.datasets[0].data.push(this.timeSeries[tempDate.format('YYYY-MM-DD')]);
+            lastData = this.timeSeries[tempDate.format('YYYY-MM-DD')];
+          } else {
+            this.chartData.datasets[0].data.push(lastData);
+          }
+          tempDate = tempDate.add(1, 'day');
+        }
       },
       updateEndDate(newDate) {
         this.endDate = newDate;
-        this.updateGraph();
       },
       updateStartDate(newDate) {
         this.startDate = newDate;
-        this.updateGraph()
       }
     }
   }
