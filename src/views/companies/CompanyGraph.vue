@@ -16,7 +16,7 @@
         <label for="endDate" class="flex flex-col justify-center">End Date:</label>
         <date-picker id="endDate" name="endDate" :initialDate="endDate" @changeDate="updateEndDate($event)"/>
       </div>
-      <line-chart class="sm:w-full md:w-full lg:w-3/4 xl:w-3/5 2xl:w-1/2" v-if="timeSeries" :chart-data="chartData" :options="chartOptions"/>
+      <line-chart v-if="timeSeries" :chart-data="chartData" :chart-options="chartOptions"/>
       <p v-else class="h-full text-center text-3xl">Loading</p>
     </template>
   </default-layout>
