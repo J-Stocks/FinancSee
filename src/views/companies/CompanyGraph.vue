@@ -17,6 +17,7 @@
             name="startDate"
             :initialDate="startDate"
             :max="maxStartDate"
+            :min="minStartDate"
             @changeDate="updateStartDate($event)"
         />
         <label for="endDate" class="flex flex-col justify-center">End Date:</label>
@@ -24,6 +25,7 @@
             id="endDate"
             name="endDate"
             :initialDate="endDate"
+            :max="maxEndDate"
             :min="minEndDate"
             @changeDate="updateEndDate($event)"
         />
@@ -73,6 +75,8 @@
         companySymbol: this.$route.params.symbol,
         companyName: '',
         endDate: dayjs().format('YYYY-MM-DD'),
+        maxEndDate: dayjs().add(1, 'day').format('YYYY-MM-DD'),
+        minStartDate: dayjs().subtract(20, "years").format('YYYY-MM-DD'),
         showChart: false,
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
         timeSeries: [],
