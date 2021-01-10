@@ -76,7 +76,7 @@
         companySymbol: this.$route.params.symbol,
         companyName: '',
         endDate: dayjs().format('YYYY-MM-DD'),
-        maxEndDate: dayjs().add(1, 'day').format('YYYY-MM-DD'),
+        maxEndDate: dayjs().format('YYYY-MM-DD'),
         minStartDate: dayjs().subtract(20, "years").format('YYYY-MM-DD'),
         showChart: false,
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
