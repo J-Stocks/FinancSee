@@ -7,10 +7,3 @@
     name: 'App',
   }
 </script>
-
-<style>
-  /*! @import */
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-</style>

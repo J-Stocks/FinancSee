@@ -144,9 +144,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .gird-cols-2-auto{
-    grid-template-columns: auto auto;
-  }
-</style>
