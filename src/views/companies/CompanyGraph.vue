@@ -10,27 +10,25 @@
         <p class="text-xl font-medium">{{ companyName }}</p>
         <p class="text-xl font-medium whitespace-nowrap">Symbol: {{ companySymbol }}</p>
       </div>
-      <div>
-        <div class="inline-grid gird-cols-2-auto gap-2">
-          <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
-          <date-picker
-              id="startDate"
-              name="startDate"
-              :initialDate="startDate"
-              :max="maxStartDate"
-              :min="minStartDate"
-              @changeDate="updateStartDate($event)"
-          />
-          <label for="endDate" class="flex flex-col justify-center">End Date:</label>
-          <date-picker
-              id="endDate"
-              name="endDate"
-              :initialDate="endDate"
-              :max="maxEndDate"
-              :min="minEndDate"
-              @changeDate="updateEndDate($event)"
-          />
-        </div>
+      <div class="self-start inline-grid gird-cols-2-auto gap-2">
+        <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
+        <date-picker
+            id="startDate"
+            name="startDate"
+            :initialDate="startDate"
+            :max="maxStartDate"
+            :min="minStartDate"
+            @changeDate="updateStartDate($event)"
+        />
+        <label for="endDate" class="flex flex-col justify-center">End Date:</label>
+        <date-picker
+            id="endDate"
+            name="endDate"
+            :initialDate="endDate"
+            :max="maxEndDate"
+            :min="minEndDate"
+            @changeDate="updateEndDate($event)"
+        />
       </div>
       <line-chart
           v-if="showChart"
