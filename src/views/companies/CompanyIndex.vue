@@ -2,17 +2,38 @@
   <default-layout>
     <template v-slot:nav>
       <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
-      <button v-on:click="previousPage" name="previous" type="button">Previous Page</button>
-      <p>Page {{ currentPage + 1 }} of {{ pageCount + 1 }}</p>
-      <button v-on:click="nextPage" name="next" type="button">Next Page</button>
+      <button
+          v-on:click="previousPage"
+          title="Previous Page"
+          type="button"
+          class="border-2 border-black rounded px-1 focus:border-blue-900 focus:text-blue-900 hover:border-blue-900 hover:text-blue-900 ease-in-out"
+      >
+        ←
+      </button>
+      <p class="text-xl flex flex-col justify-center">Page {{ currentPage + 1 }} of {{ pageCount + 1 }}</p>
+      <button
+          v-on:click="nextPage"
+          title="Next Page"
+          type="button"
+          class="border-2 border-black rounded px-1 focus:border-blue-900 focus:text-blue-900 hover:border-blue-900 hover:text-blue-900 ease-in-out"
+      >
+        →
+      </button>
     </template>
     <template v-slot:main>
-      <ul v-if="companies && companies.length !== 0">
-        <li v-for="company in companiesToShow" :key="company.id">
-          <router-link :to="{name: 'CompanyDetails', params: {symbol: company.symbol}}">{{ company.name }}</router-link>
-        </li>
-      </ul>
-      <p v-else class="h-full text-center text-3xl">No Companies Found</p>
+      <div>
+        <div v-if="companies && companies.length !== 0" class="inline-grid gird-cols-2-auto gap-2">
+          <template v-for="company in companiesToShow">
+            <router-link :to="{name: 'CompanyDetails', params: {symbol: company.symbol}}" :key="'symbol' + company.id">
+              <strong class="whitespace-nowrap">{{ company.symbol }}</strong>
+            </router-link>
+            <router-link :to="{name: 'CompanyDetails', params: {symbol: company.symbol}}" :key="'name' + company.id">
+              {{ company.name }}
+            </router-link>
+          </template>
+        </div>
+        <p v-else class="h-full text-center text-3xl">No Companies Found</p>
+      </div>
     </template>
   </default-layout>
 </template>
