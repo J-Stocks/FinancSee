@@ -39,7 +39,7 @@
       companiesToShow() {
         return this.companies.slice(
             this.currentPage * this.companiesPerPage,
-            (this.currentPage * this.companiesPerPage) + this.companiesPerPage - 1
+            (this.currentPage * this.companiesPerPage) + this.companiesPerPage
         );
       },
       pageCount() {
