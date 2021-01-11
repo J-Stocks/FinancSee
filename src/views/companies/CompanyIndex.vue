@@ -17,7 +17,7 @@
           v-on:click="previousPage"
           title="Previous Page"
           type="button"
-          class="align-middle border-2 border-black rounded px-1 focus:border-blue-900 focus:text-blue-900 hover:border-blue-900 hover:text-blue-900 ease-in-out"
+          class="align-middle border-2 border-black rounded px-1 focus:border-blue-900 focus:text-blue-900 hover:border-blue-900 hover:text-blue-900 focus:outline-none ease-in-out"
       >
         ←
       </button>
@@ -26,7 +26,7 @@
           v-on:click="nextPage"
           title="Next Page"
           type="button"
-          class="align-middle border-2 border-black rounded px-1 focus:border-blue-900 focus:text-blue-900 hover:border-blue-900 hover:text-blue-900 ease-in-out"
+          class="align-middle border-2 border-black rounded px-1 focus:border-blue-900 focus:text-blue-900 hover:border-blue-900 hover:text-blue-900 focus:outline-none ease-in-out"
       >
         →
       </button>
