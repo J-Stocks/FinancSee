@@ -65,13 +65,34 @@
           datasets: [
             {
               label: 'Adjusted Close',
+              backgroundColor: 'rgba(30, 58, 138, 0.15)',
+              borderColor: 'rgb(0, 0, 0)',
+              borderWidth: 1,
+              pointBackgroundColor: 'rbg(0, 0, 0)',
+              pointRadius: 2,
               data: []
             }
           ]
         },
         chartOptions: {
+          responsive: true,
           maintainAspectRatio: false,
-          responsive: true
+          scales: {
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                fontSize: 16,
+                labelString: 'Time'
+              }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                fontSize: 16,
+                labelString: 'Price'
+              }
+            }]
+          }
         },
         companySymbol: this.$route.params.symbol,
         companyName: '',
