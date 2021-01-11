@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from "@/views/HomePage";
+import NotFound from "@/views/NotFound";
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/company/:symbol/graph',
     name: 'CompanyGraph',
     component: () => import(/* webpackChunkName: "company-graph" */ '../views/companies/CompanyGraph.vue')
+  },
+  {
+    path: '*',
+    name: '404',
+    component: NotFound
   }
 ]
 
