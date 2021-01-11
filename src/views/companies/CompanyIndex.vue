@@ -66,7 +66,7 @@
     data: function () {
       return {
         allCompanies: [],
-        companiesPerPage: 20,
+        companiesPerPage: 50,
         visibleCompanies: [],
         currentPage: 0,
         searchString: ''
