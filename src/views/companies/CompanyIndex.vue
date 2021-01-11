@@ -11,7 +11,7 @@
       >
         ←
       </button>
-      <p class="text-xl flex flex-col justify-center">Page {{ currentPage + 1 }} of {{ pageCount + 1 }}</p>
+      <p class="text-lg sm:text-xl flex flex-col justify-center">Page {{ currentPage + 1 }} of {{ pageCount }}</p>
       <button
           v-on:click="nextPage"
           title="Next Page"
@@ -66,7 +66,11 @@
     },
     computed: {
       pageCount() {
-        return Math.ceil(this.allCompanies.length / this.companiesPerPage);
+        if (this.allCompanies && this.allCompanies.length > 0){
+          return Math.ceil(this.allCompanies.length / this.companiesPerPage);
+        } else {
+          return 1;
+        }
       }
     },
     watch: {
