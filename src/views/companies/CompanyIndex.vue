@@ -2,7 +2,7 @@
   <default-layout>
     <template v-slot:nav>
       <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
-      <search-box @changeSearch="updateSearchPattern($event)"/>
+      <search-box title="Search Companies" @changeSearch="updateSearchPattern($event)"/>
       <button
           v-on:click="previousPage"
           title="Previous Page"

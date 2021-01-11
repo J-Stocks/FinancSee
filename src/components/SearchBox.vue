@@ -3,7 +3,6 @@
       v-model="searchString"
       type="text"
       placeholder="Search"
-      title="Search Companies"
       autofocus
       maxlength="300"
       size="10"
