@@ -2,17 +2,7 @@
   <default-layout>
     <template v-slot:nav>
       <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
-      <input
-          v-model="searchString"
-          type="text"
-          placeholder="Search"
-          title="Search Companies"
-          autofocus
-          maxlength="300"
-          size="10"
-          spellcheck="false"
-          class="text-xl bg-gray-200 placeholder-gray-500 border-2 border-black rounded px-1 focus:border-blue-900 hover:border-blue-900 ease-in-out"
-      />
+      <search-box @changeSearch="updateSearchPattern($event)"/>
       <button
           v-on:click="previousPage"
           title="Previous Page"
@@ -56,12 +46,14 @@
   import AlphaVantage from '@/alpha-vantage';
   import DefaultLayout from "@/layouts/DefaultLayout";
   import NavLink from "@/components/NavLink";
+  import SearchBox from "@/components/SearchBox";
 
   export default {
     name: "CompanyIndex",
     components: {
       DefaultLayout,
-      NavLink
+      NavLink,
+      SearchBox
     },
     data: function () {
       return {
@@ -69,7 +61,7 @@
         companiesPerPage: 50,
         visibleCompanies: [],
         currentPage: 0,
-        searchString: ''
+        searchPattern: ''
       }
     },
     computed: {
@@ -81,7 +73,7 @@
       currentPage() {
         this.updateCompaniesToShow();
       },
-      searchString() {
+      searchPattern() {
         this.updateCompaniesToShow();
       }
     },
@@ -104,25 +96,20 @@
       },
       updateCompaniesToShow() {
         let tempCompanies = this.allCompanies;
-        if (this.searchString.trim()) {
-          let searchTerms = this.searchString
-              .trim()
-              .split(/\s/)
-              .map(term => term.replace(/[^\w\d]/g, ''))
-              .filter(term => term !== '')
-          ;
-          if (searchTerms) {
-            let masterPattern = new RegExp(searchTerms.join('|'), 'i');
-            tempCompanies = tempCompanies.filter(company => {
-              return company.symbol.match(masterPattern) || company.name.match(masterPattern);
-            });
-          }
+        if (this.searchPattern) {
+          let tempPattern = new RegExp(this.searchPattern, 'i');
+          tempCompanies = tempCompanies.filter(company => {
+            return company.symbol.match(tempPattern) || company.name.match(tempPattern);
+          });
           this.currentPage = 0;
         }
         this.visibleCompanies = tempCompanies.slice(
             this.currentPage * this.companiesPerPage,
             (this.currentPage * this.companiesPerPage) + this.companiesPerPage
         );
+      },
+      updateSearchPattern(newPattern) {
+        this.searchPattern = newPattern;
       }
     }
   }
