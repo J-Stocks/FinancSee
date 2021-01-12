@@ -2,14 +2,8 @@
   <default-layout>
     <template v-slot:nav>
       <nav-link :route-to="{name: 'Home'}" link-text="FS"/>
-      <nav-link :route-to="{name: 'CompanyDetails', symbol: companySymbol}" link-text="Profile"/>
-      <nav-link :route-to="{name: 'CompanyGraph', symbol: companySymbol}" link-text="Prices"/>
     </template>
     <template v-slot:main>
-      <div class="mb-2 flex flex-col-reverse md:flex-row md:justify-between">
-        <p class="text-xl font-medium">{{ companyName }}</p>
-        <p class="text-xl font-medium whitespace-nowrap">Symbol: {{ companySymbol }}</p>
-      </div>
       <div class="self-start inline-grid gird-cols-2-auto gap-2">
         <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
         <date-picker
@@ -43,15 +37,15 @@
 </template>
 
 <script>
-  import AlphaVantage from "@/alpha-vantage";
-  import DatePicker from "@/components/DatePicker"
+  import DatePicker from "@/components/DatePicker";
   import DefaultLayout from "@/layouts/DefaultLayout";
   import LineChart from "@/components/LineChart";
   import NavLink from "@/components/NavLink";
+  import AlphaVantage from "@/alpha-vantage";
   import dayjs from "dayjs";
 
   export default {
-    name: "CompanyGraph",
+    name: "CurrencyGraph",
     components: {
       DatePicker,
       DefaultLayout,
@@ -60,11 +54,12 @@
     },
     data: function () {
       return {
+        allCurrencies: [],
         chartData: {
           labels: [],
           datasets: [
             {
-              label: 'Adjusted Close',
+              label: 'Closing Price',
               backgroundColor: 'rgba(30, 58, 138, 0.15)',
               borderColor: 'rgb(0, 0, 0)',
               borderWidth: 1,
@@ -89,18 +84,18 @@
               scaleLabel: {
                 display: true,
                 fontSize: 16,
-                labelString: 'Price'
+                labelString: ''
               }
             }]
           }
         },
-        companySymbol: this.$route.params.symbol,
-        companyName: '',
         endDate: dayjs().format('YYYY-MM-DD'),
+        fromCurrency: 'GBP',
         maxEndDate: dayjs().format('YYYY-MM-DD'),
         minStartDate: dayjs().subtract(20, "years").format('YYYY-MM-DD'),
         showChart: false,
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
+        toCurrency: 'USD',
         timeSeries: [],
         updateTrigger: true
       }
@@ -111,15 +106,18 @@
       },
       minEndDate() {
         return dayjs(this.startDate).add(1, 'day').format('YYYY-MM-DD');
+      },
+      yAxisLabel() {
+        return `${this.fromCurrency} to ${this.toCurrency}`;
       }
     },
     created() {
+      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.yAxisLabel;
+      AlphaVantage.getAllCurrencies().then(results => {
+        this.allCurrencies = results;
+      });
       AlphaVantage
-          .getCompanyName(this.companySymbol)
-          .then(name => this.companyName = name)
-      ;
-      AlphaVantage
-          .getStockTimeSeries(this.companySymbol)
+          .getCurrencyTimeSeries(this.fromCurrency, this.toCurrency)
           .then(data => {
             this.timeSeries = data;
             this.updateGraph();
@@ -128,12 +126,15 @@
       ;
     },
     watch:{
-      endDate(){
+      endDate() {
         this.updateGraph();
       },
-      startDate(){
+      startDate() {
         this.updateGraph();
-      }
+      },
+      yAxisLabel() {
+        this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.yAxisLabel;
+      },
     },
     methods: {
       updateGraph() {

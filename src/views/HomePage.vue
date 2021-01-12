@@ -11,6 +11,11 @@
               class="border border-gray-800 rounded hover:bg-gray-300 text-center p-1">
             Companies
           </router-link>
+          <router-link
+              :to="{name: 'Currency'}"
+              class="border border-gray-800 rounded hover:bg-gray-300 text-center p-1">
+            Currencies
+          </router-link>
         </div>
       </div>
     </template>

@@ -27,6 +27,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "company-graph" */ '../views/companies/CompanyGraph.vue')
   },
   {
+    path: '/currency',
+    name: 'Currency',
+    component: () => import(/* webpackChunkName: "currency-graph" */ '../views/CurrencyGraph.vue')
+  },
+  {
     path: '*',
     name: '404',
     component: NotFound

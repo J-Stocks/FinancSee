@@ -7,6 +7,8 @@ export default class AlphaVantage {
 
     static companiesPromise;
 
+    static currenciesPromise;
+
     static getAllCompanies() {
         if (this.companiesPromise === undefined) {
             this.companiesPromise = fetch(`${this.baseUrl}function=LISTING_STATUS&apikey=${this.apiKey}`)
@@ -22,6 +24,21 @@ export default class AlphaVantage {
         return this.companiesPromise;
     }
 
+    static getAllCurrencies() {
+        if (this.currenciesPromise === undefined) {
+            this.currenciesPromise = fetch('https://www.alphavantage.co/physical_currency_list/')
+                .then(response => response.text())
+                .then(csv => {
+                    let currencies = Papa.parse(csv, {header: true, skipEmptyLines: true}).data;
+                    currencies.forEach((company, index) => company.id = index);
+                    return currencies;
+                })
+                .catch(error => console.log('Error', error))
+            ;
+        }
+        return this.currenciesPromise;
+    }
+
     static getCompanyBySymbol(symbol) {
         return fetch(`${this.baseUrl}function=OVERVIEW&symbol=${symbol}&apikey=${this.apiKey}`)
             .then(response => response.json())
@@ -33,7 +50,27 @@ export default class AlphaVantage {
         return this.getAllCompanies().then(companies => companies.find(company => company.symbol = symbol).name);
     }
 
-    static getTimeSeries(symbol){
+    static getCurrencyTimeSeries(fromCode, toCode) {
+        return fetch(
+            this.baseUrl +
+            `function=FX_DAILY` +
+            `&from_symbol=${fromCode}` +
+            `&to_symbol=${toCode}` +
+            `&outputsize=full` +
+            `&apikey=${this.apiKey}`
+            ).then(response => response.json())
+            .then(json => {
+                let timeSeries = []
+                for (const key of Object.keys(json["Time Series FX (Daily)"])) {
+                    timeSeries[key] = Number.parseFloat(json["Time Series FX (Daily)"][key]["4. close"]);
+                }
+                return timeSeries;
+            })
+            .catch(error => console.log('Error', error))
+        ;
+    }
+
+    static getStockTimeSeries(symbol){
         return fetch(
             this.baseUrl +
             `function=TIME_SERIES_DAILY_ADJUSTED` +
