@@ -74,7 +74,7 @@
               data: []
             },
             {
-              label: 'Volume',
+              label: 'Volume Traded',
               yAxisID: 'volume',
               backgroundColor: 'rgba(156, 163, 175, 0.4)',
               borderColor: 'rgb(30, 58, 138)',
