@@ -1,4 +1,5 @@
 import Papa from 'papaparse';
+import dayjs from "dayjs";
 
 export default class AlphaVantage {
     static apiKey = process.env.VUE_APP_ALPHA_VANTAGE_KEY;
@@ -87,5 +88,28 @@ export default class AlphaVantage {
             })
             .catch(error => console.log('Error', error))
         ;
+    }
+
+    static sliceTimeSeries(fullTimeSeries, fromDate, toDate) {
+        if (dayjs(fromDate).isBefore(dayjs().subtract(20, 'years'))) {
+            fromDate = dayjs().subtract(20, 'years');
+        }
+        let output = {
+            labels: [],
+            data: []
+        };
+        let lastData = null;
+        let tempDate = dayjs(fromDate);
+        while (tempDate.isBefore(dayjs(toDate)) && tempDate.isBefore(dayjs())) {
+            output.labels.push(tempDate.format('YYYY-MM-DD'));
+            if (fullTimeSeries[tempDate.format('YYYY-MM-DD')]) {
+                output.data.push(fullTimeSeries[tempDate.format('YYYY-MM-DD')]);
+                lastData = fullTimeSeries[tempDate.format('YYYY-MM-DD')];
+            } else {
+                output.data.push(lastData);
+            }
+            tempDate = tempDate.add(1, 'day');
+        }
+        return output;
     }
 }

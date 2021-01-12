@@ -188,23 +188,9 @@
         }
       },
       updateGraph() {
-        let tempDate = dayjs(this.startDate);
-        let lastData = null;
-        if (dayjs(this.startDate).isBefore(dayjs().subtract(20, 'years'))) {
-          tempDate = dayjs().subtract(20, 'years')
-        }
-        this.chartData.labels.splice(0, this.chartData.labels.length);
-        this.chartData.datasets[0].data.splice(0, this.chartData.datasets[0].data.length);
-        while (tempDate.isBefore(dayjs(this.endDate)) && tempDate.isBefore(dayjs())) {
-          this.chartData.labels.push(tempDate.format('YYYY-MM-DD'));
-          if (this.timeSeries[tempDate.format('YYYY-MM-DD')]) {
-            this.chartData.datasets[0].data.push(this.timeSeries[tempDate.format('YYYY-MM-DD')]);
-            lastData = this.timeSeries[tempDate.format('YYYY-MM-DD')];
-          } else {
-            this.chartData.datasets[0].data.push(lastData);
-          }
-          tempDate = tempDate.add(1, 'day');
-        }
+        let newData = AlphaVantage.sliceTimeSeries(this.timeSeries, this.startDate, this.endDate)
+        this.chartData.labels = newData.labels;
+        this.chartData.datasets[0].data = newData.data;
         this.updateTrigger = !this.updateTrigger;
       },
       updateEndDate(newDate) {
