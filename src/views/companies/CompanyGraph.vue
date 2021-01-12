@@ -138,7 +138,7 @@
     methods: {
       updateGraph() {
         let tempDate = dayjs(this.startDate);
-        let lastData = 0;
+        let lastData = null;
         if (dayjs(this.startDate).isBefore(dayjs().subtract(20, 'years'))) {
           tempDate = dayjs().subtract(20, 'years')
         }
