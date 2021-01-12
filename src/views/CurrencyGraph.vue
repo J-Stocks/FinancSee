@@ -96,7 +96,7 @@
               label: 'Closing Price',
               backgroundColor: 'rgba(30, 58, 138, 0.15)',
               borderColor: 'rgb(0, 0, 0)',
-              borderWidth: 1,
+              borderWidth: 2,
               pointBackgroundColor: 'rbg(0, 0, 0)',
               pointRadius: 2,
               data: []

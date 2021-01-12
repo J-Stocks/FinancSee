@@ -35,7 +35,7 @@
           :chart-data="chartData"
           :chart-options="chartOptions"
           :update-trigger="updateTrigger"
-          class="flex-grow"
+          class="flex-grow 2xl:bg-red-600"
       />
       <p v-else class="h-full text-center text-3xl">Loading</p>
     </template>
@@ -66,9 +66,9 @@
             {
               label: 'Adjusted Close',
               yAxisID: 'price',
-              backgroundColor: 'rgba(30, 58, 138, 0.15)',
+              backgroundColor: 'rgba(156, 163, 175, 0.4)',
               borderColor: 'rgb(0, 0, 0)',
-              borderWidth: 1,
+              borderWidth: 2,
               pointBackgroundColor: 'rbg(0, 0, 0)',
               pointRadius: 2,
               data: []
@@ -76,10 +76,10 @@
             {
               label: 'Volume',
               yAxisID: 'volume',
-              backgroundColor: 'rgba(30, 58, 138, 0.15)',
-              borderColor: 'rgb(0, 0, 0)',
-              borderWidth: 1,
-              pointBackgroundColor: 'rbg(0, 0, 0)',
+              backgroundColor: 'rgba(156, 163, 175, 0.4)',
+              borderColor: 'rgb(30, 58, 138)',
+              borderWidth: 2,
+              pointBackgroundColor: 'rbg(30, 58, 138)',
               pointRadius: 2,
               data: []
             }
