@@ -35,7 +35,7 @@
           :chart-data="chartData"
           :chart-options="chartOptions"
           :update-trigger="updateTrigger"
-          class="flex-grow 2xl:bg-red-600"
+          class="flex-grow"
       />
       <p v-else class="h-full text-center text-3xl">Loading</p>
     </template>
