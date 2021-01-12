@@ -110,6 +110,7 @@
             xAxes: [{
               scaleLabel: {
                 display: true,
+                fontColor: 'rgb(0, 0, 0)',
                 fontSize: 16,
                 labelString: 'Time'
               }
@@ -117,6 +118,7 @@
             yAxes: [{
               scaleLabel: {
                 display: true,
+                fontColor: 'rgb(0, 0, 0)',
                 fontSize: 16,
                 labelString: ''
               }
