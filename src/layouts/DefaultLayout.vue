@@ -1,5 +1,5 @@
 <template>
-  <div class="font-sans bg-gray-200">
+  <div class="font-sans text-black bg-gray-200">
     <div class="container flex flex-col min-h-screen mx-auto px-1 pb-1">
       <nav :class="navClasses">
         <slot name="nav"></slot>
