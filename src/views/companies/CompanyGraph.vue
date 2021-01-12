@@ -65,6 +65,17 @@
           datasets: [
             {
               label: 'Adjusted Close',
+              yAxisID: 'price',
+              backgroundColor: 'rgba(30, 58, 138, 0.15)',
+              borderColor: 'rgb(0, 0, 0)',
+              borderWidth: 1,
+              pointBackgroundColor: 'rbg(0, 0, 0)',
+              pointRadius: 2,
+              data: []
+            },
+            {
+              label: 'Volume',
+              yAxisID: 'volume',
               backgroundColor: 'rgba(30, 58, 138, 0.15)',
               borderColor: 'rgb(0, 0, 0)',
               borderWidth: 1,
@@ -81,17 +92,33 @@
             xAxes: [{
               scaleLabel: {
                 display: true,
+                fontColor: 'rgb(0, 0, 0)',
                 fontSize: 16,
                 labelString: 'Time'
               }
             }],
-            yAxes: [{
-              scaleLabel: {
-                display: true,
-                fontSize: 16,
-                labelString: 'Price'
+            yAxes: [
+              {
+                id: 'price',
+                position: 'left',
+                scaleLabel: {
+                  display: true,
+                  fontColor: 'rgb(0, 0, 0)',
+                  fontSize: 16,
+                  labelString: 'Price'
+                }
+              },
+              {
+                id: 'volume',
+                position: 'right',
+                scaleLabel: {
+                  display: true,
+                  fontColor: 'rgb(0, 0, 0)',
+                  fontSize: 16,
+                  labelString: 'Volume'
+                }
               }
-            }]
+            ]
           }
         },
         companySymbol: this.$route.params.symbol,
@@ -101,7 +128,10 @@
         minStartDate: dayjs().subtract(20, "years").format('YYYY-MM-DD'),
         showChart: false,
         startDate: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
-        timeSeries: [],
+        timeSeries: {
+          close: [],
+          volume: []
+        },
         updateTrigger: true
       }
     },
@@ -137,9 +167,11 @@
     },
     methods: {
       updateGraph() {
-        let newData = AlphaVantage.sliceTimeSeries(this.timeSeries, this.startDate, this.endDate)
-        this.chartData.labels = newData.labels;
-        this.chartData.datasets[0].data = newData.data;
+        let closeData = AlphaVantage.sliceTimeSeries(this.timeSeries.close, this.startDate, this.endDate);
+        let volumeData = AlphaVantage.sliceTimeSeries(this.timeSeries.volume, this.startDate, this.endDate);
+        this.chartData.labels = closeData.labels;
+        this.chartData.datasets[0].data = closeData.data;
+        this.chartData.datasets[1].data = volumeData.data;
         this.updateTrigger = !this.updateTrigger;
       },
       updateEndDate(newDate) {

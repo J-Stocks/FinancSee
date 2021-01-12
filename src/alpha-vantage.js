@@ -80,11 +80,15 @@ export default class AlphaVantage {
             `&apikey=${this.apiKey}`
             ).then(response => response.json())
             .then(json => {
-                let timeSeries = []
+                let output = {
+                    close: [],
+                    volume: []
+                };
                 for (const key of Object.keys(json["Time Series (Daily)"])) {
-                    timeSeries[key] = Number.parseFloat(json["Time Series (Daily)"][key]["5. adjusted close"]);
+                    output.close[key] = Number.parseFloat(json["Time Series (Daily)"][key]["5. adjusted close"]);
+                    output.volume[key] = Number.parseFloat(json["Time Series (Daily)"][key]["6. volume"]);
                 }
-                return timeSeries;
+                return output;
             })
             .catch(error => console.log('Error', error))
         ;
