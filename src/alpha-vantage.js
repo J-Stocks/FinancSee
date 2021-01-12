@@ -10,6 +10,11 @@ export default class AlphaVantage {
 
     static currenciesPromise;
 
+    //Currently the API call in this function takes approximately 12 seconds to reply.
+    //App performance could be improved by importing this data from a local file on the webserver, but then the data
+    //would not be kept up to date. Ideally some backend server would poll the API intermittently, cache the result and
+    //then serve it more quickly, but backend programming is beyond the scope of this assignment, so the call has been
+    //left as is.
     static getAllCompanies() {
         if (this.companiesPromise === undefined) {
             this.companiesPromise = fetch(`${this.baseUrl}function=LISTING_STATUS&apikey=${this.apiKey}`)
