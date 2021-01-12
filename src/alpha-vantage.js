@@ -48,7 +48,7 @@ export default class AlphaVantage {
     }
 
     static getCompanyName(symbol) {
-        return this.getAllCompanies().then(companies => companies.find(company => company.symbol = symbol).name);
+        return this.getAllCompanies().then(companies => companies.find(company => company.symbol === symbol).name);
     }
 
     static getCurrencyTimeSeries(fromCode, toCode) {
