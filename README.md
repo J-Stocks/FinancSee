@@ -5,7 +5,7 @@ FinancSee is a web application built by Joshua Stocks (u1757754) for the module 
 Setup Instructions:
 To set up and run FinancSee in a dev environment follow these steps:
 - Download the project files, either from the command line: `git clone git@github.com:J-Stocks/FinancSee.git`, or by downloading them as a .zip archive.
-- Install the project dependencies: `npm install`.
+- Install the project's [npm](https://nodejs.org/en/) dependencies: `npm install`.
 - Create a local .env file using the env.example provided in this repo: `cp .env.example .env.local`.
 - Add your Alpha Vantage API key to the "VUE_APP_ALPHA_VANTAGE_KEY" property in the new .env.local file. Free API keys are available from [Alpha Vantage's website](https://www.alphavantage.co/support/#api-key).
 
