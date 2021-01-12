@@ -1,7 +1,7 @@
 # About FinancSee
 FinancSee is a web application built by Joshua Stocks (u1757754) for the module Advanced Front-End Web Development (CHT2531) at the University of Huddersfield. FininacSee allows users to browse company profiles, stock prices and compare currency values using data provided by [Alpha Vantage](https://www.alphavantage.co/#about).
 
-#Setup Instructions:
+# Setup Instructions:
 To set up and run FinancSee in a dev environment follow these steps:
 - Download the project files, either from the command line: `git clone git@github.com:J-Stocks/FinancSee.git`, or by downloading them as a .zip archive.
 - Install the project's [npm](https://nodejs.org/en/) dependencies: `npm install`.
@@ -13,7 +13,7 @@ Your local copy of FinancSee is now ready to use, for this you have several opti
 - Use `npm run serve` to start a local webserver with hot-reloads to see any code changes you make in action.
 - Use `npm run build` to compile and minify all code for deployment to production, these files will be placed in the `/dist/` directory of your project. Note that this does not start a webserver, to use the compiled files you will need to move them to your webserver or initialise one in the `./dist/` directory. 
 
-#Tools
+# Tools
 FinancSee was built using the following tools:
 - [Vue.js](https://vuejs.org/)
   - [Vue CLI](https://cli.vuejs.org/)
