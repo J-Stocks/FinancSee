@@ -5,6 +5,38 @@
     </template>
     <template v-slot:main>
       <div class="self-start inline-grid gird-cols-2-auto gap-2">
+        <label>From: </label>
+        <select
+            v-model="fromCurrency"
+            title="From"
+            id="fromCurrency"
+            name="fromCurrency"
+            class="text-sm sm:text-lg bg-gray-200 border-2 border-black rounded p-0.5 m-0.5 focus:border-blue-900 hover:border-blue-900 ease-in-out"
+        >
+          <option
+              v-for="currency in allCurrencies"
+              :key="currency['currency code']"
+              :value="currency['currency code']"
+          >
+            {{ `(${currency['currency code']}) ${currency['currency name']}` }}
+          </option>
+        </select>
+        <label>To: </label>
+        <select
+            v-model="toCurrency"
+            title="To"
+            id="toCurrency"
+            name="toCurrency"
+            class="text-sm sm:text-lg bg-gray-200 border-2 border-black rounded p-0.5 m-0.5 focus:border-blue-900 hover:border-blue-900 ease-in-out"
+        >
+          <option
+              v-for="currency in allCurrencies"
+              :key="currency['currency code']"
+              :value="currency['currency code']"
+          >
+            {{ `(${currency['currency code']}) ${currency['currency name']}` }}
+          </option>
+        </select>
         <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
         <date-picker
             id="startDate"
@@ -116,27 +148,35 @@
       AlphaVantage.getAllCurrencies().then(results => {
         this.allCurrencies = results;
       });
-      AlphaVantage
-          .getCurrencyTimeSeries(this.fromCurrency, this.toCurrency)
-          .then(data => {
-            this.timeSeries = data;
-            this.updateGraph();
-            this.showChart = true;
-          })
-      ;
+      this.getData().then(() => {
+        this.updateGraph();
+        this.showChart = true;
+      });
     },
     watch:{
       endDate() {
         this.updateGraph();
       },
+      fromCurrency() {
+        this.getData().then(() => this.updateGraph());
+      },
       startDate() {
         this.updateGraph();
+      },
+      toCurrency() {
+        this.getData().then(() => this.updateGraph());
       },
       yAxisLabel() {
         this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.yAxisLabel;
       },
     },
     methods: {
+      getData() {
+        return AlphaVantage
+            .getCurrencyTimeSeries(this.fromCurrency, this.toCurrency)
+            .then(data => this.timeSeries = data)
+        ;
+      },
       updateGraph() {
         let tempDate = dayjs(this.startDate);
         let lastData = null;
