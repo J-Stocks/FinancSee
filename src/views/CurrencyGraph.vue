@@ -17,8 +17,9 @@
               v-for="currency in allCurrencies"
               :key="currency['currency code']"
               :value="currency['currency code']"
+              :title="`(${currency['currency code']}) ${currency['currency name']}`"
           >
-            {{ `(${currency['currency code']}) ${currency['currency name']}` }}
+            {{ `(${currency['currency code']}) ${truncateName(currency['currency name'])}` }}
           </option>
         </select>
         <label>To: </label>
@@ -33,8 +34,9 @@
               v-for="currency in allCurrencies"
               :key="currency['currency code']"
               :value="currency['currency code']"
+              :title="`(${currency['currency code']}) ${currency['currency name']}`"
           >
-            {{ `(${currency['currency code']}) ${currency['currency name']}` }}
+            {{ `(${currency['currency code']}) ${truncateName(currency['currency name'])}` }}
           </option>
         </select>
         <label for="startDate" class="flex flex-col justify-center">Start Date:</label>
@@ -123,6 +125,7 @@
         },
         endDate: dayjs().format('YYYY-MM-DD'),
         fromCurrency: 'GBP',
+        maxCurrencyNameLength: 25,
         maxEndDate: dayjs().format('YYYY-MM-DD'),
         minStartDate: dayjs().subtract(20, "years").format('YYYY-MM-DD'),
         showChart: false,
@@ -176,6 +179,13 @@
             .getCurrencyTimeSeries(this.fromCurrency, this.toCurrency)
             .then(data => this.timeSeries = data)
         ;
+      },
+      truncateName(name) {
+        if (name.length > this.maxCurrencyNameLength) {
+          return name.substring(0, this.maxCurrencyNameLength) + '...';
+        } else {
+          return name;
+        }
       },
       updateGraph() {
         let tempDate = dayjs(this.startDate);
