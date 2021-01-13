@@ -19,7 +19,7 @@
       <p class="mx-auto w-full sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-2/5 2xl:w-1/3">
         <span>
           FinancSee is a web application built by Joshua Stocks (u1757754) for the module Advanced Front-End Web
-          Development (CHT2531) at the University of Huddersfield. FininacSee allows users to browse company
+          Development (CHT2531) at the University of Huddersfield. FinancSee allows users to browse company
           profiles, stock prices and compare currency values using data provided by the
         </span>
         <a href="https://www.alphavantage.co/#about" class="underline hover:border-blue-900 focus:text-blue-900">Alpha Vantage</a>
