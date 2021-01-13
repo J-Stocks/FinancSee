@@ -22,7 +22,7 @@
           <p>Address: {{ company.Address }}</p>
         </div>
       </div>
-      <p v-else class="h-full text-center text-3xl">Loading</p>
+      <loading-message v-else/>
     </template>
   </default-layout>
 </template>
@@ -31,11 +31,13 @@
   import AlphaVantage from '@/alpha-vantage';
   import DefaultLayout from "@/layouts/DefaultLayout";
   import NavLink from "@/components/NavLink";
+  import LoadingMessage from "@/components/LoadingMessage";
 
   export default {
     name: "CompanyDetails",
     components: {
       DefaultLayout,
+      LoadingMessage,
       NavLink
     },
     data: function () {

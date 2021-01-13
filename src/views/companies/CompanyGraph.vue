@@ -37,7 +37,7 @@
           :update-trigger="updateTrigger"
           class="flex-grow"
       />
-      <p v-else class="h-full text-center text-3xl">Loading</p>
+      <loading-message v-else/>
     </template>
   </default-layout>
 </template>
@@ -47,6 +47,7 @@
   import DatePicker from "@/components/DatePicker"
   import DefaultLayout from "@/layouts/DefaultLayout";
   import LineChart from "@/components/LineChart";
+  import LoadingMessage from "@/components/LoadingMessage";
   import NavLink from "@/components/NavLink";
   import dayjs from "dayjs";
 
@@ -56,6 +57,7 @@
       DatePicker,
       DefaultLayout,
       LineChart,
+      LoadingMessage,
       NavLink
     },
     data: function () {

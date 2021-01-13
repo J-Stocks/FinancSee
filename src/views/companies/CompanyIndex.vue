@@ -36,7 +36,7 @@
         <p v-else-if="allCompanies && allCompanies.length !== 0" class="h-full text-center text-3xl">
           No Matching Companies Found
         </p>
-        <p v-else class="h-full text-center text-3xl">Loading</p>
+        <loading-message v-else/>
       </div>
     </template>
   </default-layout>
@@ -45,6 +45,7 @@
 <script>
   import AlphaVantage from '@/alpha-vantage';
   import DefaultLayout from "@/layouts/DefaultLayout";
+  import LoadingMessage from "@/components/LoadingMessage";
   import NavLink from "@/components/NavLink";
   import SearchBox from "@/components/SearchBox";
 
@@ -52,6 +53,7 @@
     name: "CompanyIndex",
     components: {
       DefaultLayout,
+      LoadingMessage,
       NavLink,
       SearchBox
     },
