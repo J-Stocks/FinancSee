@@ -39,9 +39,7 @@ export default class AlphaVantage {
                 'https://www.alphavantage.co/physical_currency_list/',
                 false
             ).then(csv => {
-                let currencies = Papa.parse(csv, {header: true, skipEmptyLines: true}).data;
-                currencies.forEach((company, index) => company.id = index);
-                return currencies;
+                return Papa.parse(csv, {header: true, skipEmptyLines: true}).data;
             }).catch(error => console.log('Error', error));
         }
         return this.currenciesPromise;
