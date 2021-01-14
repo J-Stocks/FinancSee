@@ -49,7 +49,6 @@ export default class AlphaVantage {
 
     static getCompanyBySymbol(symbol) {
         return this.retryFetch(`${this.baseUrl}function=OVERVIEW&symbol=${symbol}&apikey=${this.apiKey}`)
-            .then(response => response.json())
             .catch(error => console.log('Error', error));
     }
 
