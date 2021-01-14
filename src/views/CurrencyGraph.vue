@@ -91,6 +91,7 @@
     data: function () {
       return {
         allCurrencies: [],
+        apiRejection: false,
         chartData: {
           labels: [],
           datasets: [
@@ -155,10 +156,7 @@
       AlphaVantage.getAllCurrencies().then(results => {
         this.allCurrencies = results;
       });
-      this.getData().then(() => {
-        this.updateGraph();
-        this.showChart = true;
-      });
+      this.getData().then(() => this.updateGraph());
     },
     watch:{
       endDate() {
@@ -179,6 +177,7 @@
     },
     methods: {
       getData() {
+        this.showChart = false;
         return AlphaVantage
             .getCurrencyTimeSeries(this.fromCurrency, this.toCurrency)
             .then(data => this.timeSeries = data)
@@ -195,6 +194,7 @@
         let newData = AlphaVantage.sliceTimeSeries(this.timeSeries, this.startDate, this.endDate)
         this.chartData.labels = newData.labels;
         this.chartData.datasets[0].data = newData.data;
+        this.showChart = true;
         this.updateTrigger = !this.updateTrigger;
       },
       updateEndDate(newDate) {
