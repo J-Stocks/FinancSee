@@ -91,7 +91,6 @@
     data: function () {
       return {
         allCurrencies: [],
-        apiRejection: false,
         chartData: {
           labels: [],
           datasets: [
