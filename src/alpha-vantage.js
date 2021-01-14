@@ -1,5 +1,5 @@
-import Papa from 'papaparse';
 import dayjs from "dayjs";
+import Papa from 'papaparse';
 
 export default class AlphaVantage {
     static apiKey = process.env.VUE_APP_ALPHA_VANTAGE_KEY;

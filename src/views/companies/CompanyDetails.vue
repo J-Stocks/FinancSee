@@ -30,8 +30,8 @@
 <script>
   import AlphaVantage from '@/alpha-vantage';
   import DefaultLayout from "@/layouts/DefaultLayout";
-  import NavLink from "@/components/NavLink";
   import LoadingMessage from "@/components/LoadingMessage";
+  import NavLink from "@/components/NavLink";
 
   export default {
     name: "CompanyDetails",
